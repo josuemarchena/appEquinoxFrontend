@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CartService } from 'src/app/share/cart.service';
@@ -17,12 +18,31 @@ export class ProductoIndexComponent implements OnInit {
   constructor(
     private gService: GenericService,
     private notificacion: NotificacionService,
-    private cartService: CartService
+    private cartService: CartService,
+    private route: ActivatedRoute
   ) {
     this.listarProductos();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.mensajes();
+  }
+
+  mensajes() {
+    let auth = false;
+    this.route.queryParams.subscribe((params) => {
+      auth = params.auth || false;
+    });
+
+    if (auth) {
+      this.notificacion.mensaje(
+        'Usuario',
+        'Usuario no autorizado para ingresar al recurso solicitado',
+        'warning'
+      );
+    }
+  }
+
   listarProductos() {
     this.gService
       .list('producto/')

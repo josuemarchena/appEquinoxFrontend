@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService } from '../share/auth-guard.service';
+import { RolGuardService } from '../share/rol-guard.service';
 import { ProductoAllComponent } from './producto-all/producto-all.component';
 import { ProductoCreateComponent } from './producto-create/producto-create.component';
 import { ProductoIndexComponent } from './producto-index/producto-index.component';
@@ -11,10 +13,25 @@ const routes: Routes = [
   {
     path: 'producto/all',
     component: ProductoAllComponent,
+    canActivate: [AuthGuardService, RolGuardService],
+    data: { expectedRole: 1 },
   },
-  { path: 'producto/create', component: ProductoCreateComponent },
-  { path: 'producto/:id', component: ProductoShowComponent },
-  { path: 'producto/update/:id', component: ProductoUpdateComponent },
+  {
+    path: 'producto/create',
+    component: ProductoCreateComponent,
+    canActivate: [AuthGuardService, RolGuardService],
+    data: { expectedRole: 1 },
+  },
+  {
+    path: 'producto/:id',
+    component: ProductoShowComponent,
+  },
+  {
+    path: 'producto/update/:id',
+    component: ProductoUpdateComponent,
+    canActivate: [AuthGuardService, RolGuardService],
+    data: { expectedRole: 1 },
+  },
 ];
 
 @NgModule({

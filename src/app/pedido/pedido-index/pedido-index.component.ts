@@ -87,17 +87,13 @@ export class PedidoIndexComponent implements OnInit {
     this.noti.mensaje('Orden', 'Producto eliminado del pedido', 'warning');
   }
   ordenar() {
-
-
-
     if (this.qtyItems > 0) {
-
       this.form.value.detalles = { detalles: this.cartService.getItems() };
 
       let formData = new FormData();
       formData = this.gService.toFormData(this.form.value);
+      console.log(this.form.value);
       formData.append('_method', 'POST');
-
 
       this.gService.create('pedido/', formData).subscribe((respuesta: any) => {
         this.noti.mensaje(

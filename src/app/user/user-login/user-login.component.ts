@@ -35,6 +35,7 @@ export class UserLoginComponent implements OnInit {
     this.mensajes();
   }
 
+  /*
   mensajes() {
     let register = false;
     //Obtener parámetros de la URL
@@ -46,6 +47,31 @@ export class UserLoginComponent implements OnInit {
         'Usuario',
         '¡Registro satisfactorio! Especifique sus credenciales para ingresar',
         'success'
+      );
+    }
+  }
+  */
+
+  mensajes() {
+    let register = false;
+    let auth = false;
+    //Obtener parámetros de la URL
+    this.route.queryParams.subscribe((params) => {
+      register = params.register || false;
+      auth = params.auth || false;
+    });
+    if (register) {
+      this.notificacion.mensaje(
+        'Usuario',
+        '¡Registro satisfactorio! Especifique sus credenciales para ingresar',
+        'success'
+      );
+    }
+    if (auth) {
+      this.notificacion.mensaje(
+        'Usuario',
+        'Usuario no autorizado para ingresar al recurso solicitado',
+        'warning'
       );
     }
   }
@@ -75,10 +101,7 @@ export class UserLoginComponent implements OnInit {
       .subscribe((respuesta: any) => {
         (this.infoUsuario = respuesta), this.router.navigate(['/']);
       });
-
   }
-
-
 
   /*Manejar errores de formulario en Angular*/
 
