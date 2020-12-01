@@ -88,18 +88,17 @@ export class PedidoIndexComponent implements OnInit {
   }
   ordenar() {
     if (this.qtyItems > 0) {
-      this.form.value.detalles = { detalles: this.cartService.getItems() };
 
+      this.form.value.detalles =  this.cartService.getItems() ;
       let formData = new FormData();
       formData = this.gService.toFormData(this.form.value);
-      console.log(this.form.value);
       formData.append('_method', 'POST');
 
       this.gService.create('pedido/', formData).subscribe((respuesta: any) => {
         this.noti.mensaje(
           'Orden',
           'Orden registrada satisfactoriamente',
-          'sucess'
+          'success'
         );
         this.cartService.deleteCart();
         this.items = this.cartService.getItems();

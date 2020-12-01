@@ -38,7 +38,7 @@ import { CustomDatePipe } from './pipes/custom-date.pipe';
     AppRoutingModule,
 
   ],
-  
+
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
