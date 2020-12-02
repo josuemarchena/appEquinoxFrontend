@@ -90,11 +90,11 @@ export class PedidoIndexComponent implements OnInit {
     if (this.qtyItems > 0) {
 
       this.form.value.detalles =  this.cartService.getItems() ;
-      let formData = new FormData();
+      /*let formData = new FormData();
       formData = this.gService.toFormData(this.form.value);
-      formData.append('_method', 'POST');
+      formData.append('_method', 'POST');*/
 
-      this.gService.create('pedido/', formData).subscribe((respuesta: any) => {
+      this.gService.create('pedido/', this.form.value).subscribe((respuesta: any) => {
         this.noti.mensaje(
           'Orden',
           'Orden registrada satisfactoriamente',

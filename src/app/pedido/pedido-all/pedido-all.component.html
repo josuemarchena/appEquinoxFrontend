@@ -19,7 +19,7 @@
         <th scope="row">{{ item.id }}</th>
         <td>{{ item.nombre_completo_cliente }}</td>
         <td>{{ item.fecha| date:'dd/MM/yyyy'}}</td>
-        <td>₡{{ item.total }}</td>
+        <td>₡{{ item.total| number: "3.2-5" }}</td>
         <td>{{ item.estado }}</td>
         <td><button class="btn btn-outline-primary">Editar<i class="fas fa-pencil-alt" aria-hidden="true"></i></button></td>
       </tr>
