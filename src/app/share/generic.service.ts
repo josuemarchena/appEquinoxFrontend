@@ -53,7 +53,6 @@ export class GenericService {
     );
   }
 
-
   //Métodos Gestión FormData
   //FormData crear
   create_formdata(

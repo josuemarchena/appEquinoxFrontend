@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   Validators,
@@ -11,20 +10,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { NotificacionService } from 'src/app/share/notificacion.service';
-
 @Component({
-  selector: 'app-personal-update',
-  templateUrl: './personal-update.component.html',
-  styleUrls: ['./personal-update.component.css'],
+  selector: 'app-pedido-estado',
+  templateUrl: './pedido-estado.component.html',
+  styleUrls: ['./pedido-estado.component.css'],
 })
-export class PersonalUpdateComponent implements OnInit {
-  personal: any;
+export class PedidoEstadoComponent implements OnInit {
+  pedido: any;
   imageURL: string;
-  vehiculos: any;
+  personals: any;
   error: any;
   makeSubmit: boolean = false;
   formUpdate: FormGroup;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  entrega: any;
   constructor(
     public fb: FormBuilder,
     private router: Router,
@@ -33,12 +32,12 @@ export class PersonalUpdateComponent implements OnInit {
     private notificacion: NotificacionService
   ) {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.getPersonal(id);
+    this.getPedido(id);
   }
 
-  getPersonal(id: number) {
-    this.gService.get('personal', id).subscribe((respuesta: any) => {
-      this.personal = respuesta;
+  getPedido(id: number) {
+    this.gService.get('pedido', id).subscribe((respuesta: any) => {
+      this.pedido = respuesta;
       //Obtenida la información del videojuego
       //se construye el formulario
       this.reactiveForm();
@@ -49,25 +48,20 @@ export class PersonalUpdateComponent implements OnInit {
     this.getvehiculos();
 
     //Si hay información del videojuego
-    if (this.personal) {
+    if (this.pedido) {
       //Cargar la información del videojuego
       //en los controles que conforman el formulario
       this.formUpdate = this.fb.group({
-        id: [this.personal.id, [Validators.required]],
-        nombre: [this.personal.nombre, [Validators.required]],
-        apellido: [this.personal.apellido, [Validators.required]],
-        correo: [this.personal.correo, [Validators.required]],
-        telefono: [this.personal.telefono, [Validators.required]],
-        estado: [this.personal.estado, [Validators.required]],
-        vehiculo_id: [this.personal.vehiculo_id, [Validators.required]],
+        id: [this.pedido.id, [Validators.required]],
+        estado: [this.pedido.estado, [Validators.required]],
       });
     }
   }
 
   getvehiculos() {
-    return this.gService.list('vehiculo/').subscribe(
+    return this.gService.list('personal/').subscribe(
       (data: any) => {
-        this.vehiculos = data;
+        this.personals = data;
       },
       (error) => {
         this.error = error;
@@ -88,10 +82,10 @@ export class PersonalUpdateComponent implements OnInit {
     formData = this.gService.toFormData(this.formUpdate.value);
     formData.append('_method', 'PATCH');
     this.gService
-      .update_formdata('personal', formData)
+      .update_formdata('pedido', formData)
       .subscribe((respuesta: any) => {
-        this.personal = respuesta;
-        this.router.navigate(['/personal/all'], {
+        this.personals = respuesta;
+        this.router.navigate(['/pedido/all'], {
           queryParams: { update: 'true' },
         });
         this.notificacion.mensaje(
@@ -105,7 +99,7 @@ export class PersonalUpdateComponent implements OnInit {
     this.formUpdate.reset();
   }
   onBack() {
-    this.router.navigate(['/personal/all']);
+    this.router.navigate(['/pedido/all']);
   }
   public errorHandling = (control: string, error: string) => {
     return (

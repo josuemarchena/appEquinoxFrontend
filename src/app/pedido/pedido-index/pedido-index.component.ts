@@ -88,22 +88,23 @@ export class PedidoIndexComponent implements OnInit {
   }
   ordenar() {
     if (this.qtyItems > 0) {
-
-      this.form.value.detalles =  this.cartService.getItems() ;
+      this.form.value.detalles = this.cartService.getItems();
       /*let formData = new FormData();
       formData = this.gService.toFormData(this.form.value);
       formData.append('_method', 'POST');*/
 
-      this.gService.create('pedido/', this.form.value).subscribe((respuesta: any) => {
-        this.noti.mensaje(
-          'Orden',
-          'Orden registrada satisfactoriamente',
-          'success'
-        );
-        this.cartService.deleteCart();
-        this.items = this.cartService.getItems();
-        this.total = this.cartService.getTotal();
-      });
+      this.gService
+        .create('pedido/', this.form.value)
+        .subscribe((respuesta: any) => {
+          this.noti.mensaje(
+            'Orden',
+            'Orden registrada satisfactoriamente',
+            'success'
+          );
+          this.cartService.deleteCart();
+          this.items = this.cartService.getItems();
+          this.total = this.cartService.getTotal();
+        });
     } else {
       this.noti.mensaje(
         'Orden',

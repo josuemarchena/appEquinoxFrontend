@@ -2,7 +2,7 @@
   <button class="btn btn-outline-success">
     Crear Nuevo <span class="fa fa-plus"></span>
   </button>
-      <h2 class="text-center">Pedidos</h2>
+  <h2 class="text-center">Pedidos</h2>
   <table class="table table-hover">
     <thead>
       <tr>
@@ -18,10 +18,25 @@
       <tr *ngFor="let item of datos">
         <th scope="row">{{ item.id }}</th>
         <td>{{ item.nombre_completo_cliente }}</td>
-        <td>{{ item.fecha| date:'dd/MM/yyyy'}}</td>
-        <td>₡{{ item.total| number: "3.2-5" }}</td>
+        <td>{{ item.fecha | date: "dd/MM/yyyy" }}</td>
+        <td>₡{{ item.total | number: "3.2-5" }}</td>
         <td>{{ item.estado }}</td>
-        <td><button class="btn btn-outline-primary">Editar<i class="fas fa-pencil-alt" aria-hidden="true"></i></button></td>
+        <td>
+          <button
+            class="btn btn-outline-primary"
+            (click)="actualizarEstado(item)"
+          >
+            Listo para facturar<i
+              class="fas fa-pencil-alt"
+              aria-hidden="true"
+            ></i>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-primary">
+            Asignar personal<i class="fas fa-pencil-alt" aria-hidden="true"></i>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

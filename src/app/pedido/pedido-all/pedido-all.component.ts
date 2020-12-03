@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CustomDatePipe } from 'src/app/pipes/custom-date.pipe';
 import { GenericService } from 'src/app/share/generic.service';
+import { NotificacionService } from 'src/app/share/notificacion.service';
 
 @Component({
   selector: 'app-pedido-all',
@@ -14,11 +15,12 @@ import { GenericService } from 'src/app/share/generic.service';
 export class PedidoAllComponent implements OnInit {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  error: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private gService: GenericService,
-    //public datepipe: DatePipe
+    private gService: GenericService, //public datepipe: DatePipe
+    private noti: NotificacionService
   ) {}
 
   ngOnInit(): void {
@@ -26,18 +28,25 @@ export class PedidoAllComponent implements OnInit {
   }
 
   listaPedidos() {
-
     this.gService
       .list('pedido/all')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-
         //this.datepipe.transform(data.fecha, 'yyyy/MM/dd');
         this.datos = data;
-
       });
   }
 
-
-
+  actualizarEstado(item) {
+    console.log(item);
+    return this.gService
+      .update('pedido/updateEstado', item)
+      .subscribe((respuesta: any) => {
+        this.noti.mensaje(
+          'Pedido',
+          'Se cambió el estado satisfactoriamente',
+          'success'
+        );
+      });
+  }
 }
