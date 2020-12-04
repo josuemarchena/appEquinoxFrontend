@@ -1,5 +1,6 @@
 //import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -16,7 +17,9 @@ export class PedidoAllComponent implements OnInit {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   error: any;
+
   constructor(
+    public fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private gService: GenericService, //public datepipe: DatePipe
@@ -37,16 +40,31 @@ export class PedidoAllComponent implements OnInit {
       });
   }
 
+
+  redirectTo(uri:string){
+   this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+   this.router.navigate([uri]));
+  }
+
   actualizarEstado(item) {
-    console.log(item);
-    return this.gService
-      .update('pedido/updateEstado', item)
+
+    let formData = new FormData();
+    formData = this.gService.toFormData(item);
+    formData.append('_method', 'PATCH');
+
+    this.gService
+      .update_formdata('pedido', formData)
       .subscribe((respuesta: any) => {
+        this.redirectTo('/pedido/all');
+
         this.noti.mensaje(
           'Pedido',
           'Se cambió el estado satisfactoriamente',
           'success'
         );
       });
+
+
+
   }
 }
