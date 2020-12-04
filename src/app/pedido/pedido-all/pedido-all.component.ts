@@ -40,14 +40,13 @@ export class PedidoAllComponent implements OnInit {
       });
   }
 
-
-  redirectTo(uri:string){
-   this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-   this.router.navigate([uri]));
+  redirectTo(uri: string) {
+    this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate([uri]));
   }
 
   actualizarEstado(item) {
-
     let formData = new FormData();
     formData = this.gService.toFormData(item);
     formData.append('_method', 'PATCH');
@@ -63,8 +62,11 @@ export class PedidoAllComponent implements OnInit {
           'success'
         );
       });
+  }
 
-
-
+  asignarPersonal(id: number) {
+    this.router.navigate(['/pedido/pedidopersonal', id], {
+      relativeTo: this.route,
+    });
   }
 }

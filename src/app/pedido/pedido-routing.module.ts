@@ -4,6 +4,7 @@ import { AuthGuardService } from '../share/auth-guard.service';
 import { RolGuardService } from '../share/rol-guard.service';
 import { PedidoAllComponent } from './pedido-all/pedido-all.component';
 import { PedidoIndexComponent } from './pedido-index/pedido-index.component';
+import { PedidoPersonalComponent } from './pedido-personal/pedido-personal.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'pedido/index',
     component: PedidoIndexComponent,
+  },
+  {
+    path: 'pedido/pedidopersonal/:id',
+    component: PedidoPersonalComponent,
   },
 ];
 
