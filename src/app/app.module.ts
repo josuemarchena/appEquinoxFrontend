@@ -13,19 +13,11 @@ import { PersonalModule } from './personal/personal.module';
 import { ProductoModule } from './producto/producto.module';
 import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
 import { CustomDatePipe } from './pipes/custom-date.pipe';
-
-
-
-
-
+import { FacturaModule } from './factura/factura.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CustomDatePipe
-  ],
+  declarations: [AppComponent, CustomDatePipe],
   imports: [
-
     BrowserModule,
     HttpClientModule,
     CoreModule,
@@ -35,16 +27,16 @@ import { CustomDatePipe } from './pipes/custom-date.pipe';
     PedidoModule,
     PersonalModule,
     ProductoModule,
+    FacturaModule,
     AppRoutingModule,
-
   ],
 
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptorService,
-      multi:true
-    }
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
