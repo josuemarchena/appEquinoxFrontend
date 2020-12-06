@@ -12,7 +12,7 @@ import { NotificacionService } from 'src/app/share/notificacion.service';
   styleUrls: ['./factura-create.component.css']
 })
 export class FacturaCreateComponent implements OnInit {
-  date: Date;
+  fecha = new Date();
   pedidos: any;
   currentUser: any;
   factura: any;
@@ -28,7 +28,7 @@ export class FacturaCreateComponent implements OnInit {
     private notificacion: NotificacionService,
     private authService: AuthenticationService
   ) {
-    this.date= new Date();
+    
 
    }
 
@@ -41,7 +41,7 @@ export class FacturaCreateComponent implements OnInit {
     this.formCreate = this.fb.group({
       pedido_id: ['', [Validators.required]],
       user_id: [this.currentUser.user.id, [Validators.required]],
-      fecha: [this.date.toLocaleString(), [Validators.required]],
+      //fecha: [this.date.toLocaleString(), [Validators.required]],
       total: ['', [Validators.required]],
     });
     this.getPedidos();
@@ -49,7 +49,7 @@ export class FacturaCreateComponent implements OnInit {
 
   getPedidos(){
     //cambiar a que este jale solo los listos para facturar
-      return this.gService.list('pedido/').subscribe(
+      return this.gService.list('pedido/alllisto').subscribe(
       (data: any) => {
         this.pedidos = data;
       },
@@ -61,7 +61,18 @@ export class FacturaCreateComponent implements OnInit {
   }
 
   submitForm() {
-    alert('Hay que cambiar que solo jale los pedidos listos para facturar y que guarde la factura')
+    let formData = new FormData();
+    formData = this.gService.toFormData(this.formCreate.value);
+    formData.append('_method', 'POST');
+    this.gService
+      .create('factura/', formData)
+      .subscribe((respuesta: any) => {
+        this.factura = respuesta;
+        this.router.navigate(['/factura/all'], {
+          queryParams: { register: 'true' },
+        });
+        this.notificacion.mensaje('Usuario:','El registro se realizó correctamente','success');
+      });
   }
   onReset() {
     this.formCreate.reset();

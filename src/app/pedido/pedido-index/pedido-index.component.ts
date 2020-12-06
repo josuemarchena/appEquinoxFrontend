@@ -20,7 +20,7 @@ export class PedidoIndexComponent implements OnInit {
   form: FormGroup;
   provincias: any;
   error: any;
-
+  makeSubmit: boolean = false;
   constructor(
     public fb: FormBuilder,
     private cartService: CartService,
@@ -44,12 +44,12 @@ export class PedidoIndexComponent implements OnInit {
 
   reactiveForm() {
     this.form = this.fb.group({
-      cedula_cliente: ['207910029', [Validators.required]],
-      nombre_completo_cliente: ['Eduardo Arley', [Validators.required]],
-      telefono_cliente: ['64488685', [Validators.required]],
+      cedula_cliente: ['', [Validators.required]],
+      nombre_completo_cliente: ['', [Validators.required]],
+      telefono_cliente: ['', [Validators.required]],
       tipo_pedido: ['Pasa a retirar', [Validators.required]],
       fecha: ['', [Validators.required]],
-      direccion: ['Pilas del Rosario, Naranjo', [Validators.required]],
+      direccion: ['', [Validators.required]],
       provincia_id: ['1', [Validators.required]],
       detalles: this.fb.array([]),
     });
@@ -70,6 +70,7 @@ export class PedidoIndexComponent implements OnInit {
 
   mostrar() {
     //este es una prueba
+
   }
 
   actualizarCantidad(item: any) {
@@ -87,6 +88,12 @@ export class PedidoIndexComponent implements OnInit {
     this.noti.mensaje('Orden', 'Producto eliminado del pedido', 'warning');
   }
   ordenar() {
+
+    this.makeSubmit = true;
+    if(this.form.value.tipo_pedido=='Pasa a retirar'){
+      this.form.value.direccion="Local";
+    }
+
     if (this.qtyItems > 0) {
       this.form.value.detalles = this.cartService.getItems();
       /*let formData = new FormData();
@@ -113,4 +120,12 @@ export class PedidoIndexComponent implements OnInit {
       );
     }
   }
+
+  public errorHandling = (control: string, error: string) => {
+    return (
+      this.form.controls[control].hasError(error) &&
+      this.form.controls[control].invalid &&
+      (this.makeSubmit || this.form.controls[control].touched)
+    );
+  };
 }

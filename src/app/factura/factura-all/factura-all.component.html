@@ -19,7 +19,7 @@
         <th scope="col">Usuario</th>
         <th scope="col">Fecha</th>
         <th scope="col">Total</th>
-        <th></th>
+
       </tr>
     </thead>
     <tbody>
@@ -27,9 +27,9 @@
         <tr *ngFor="let item of datos">
           <th scope="row">{{ item.id }}</th>
           <td>{{ item.pedido_id }}</td>
-          <td>{{ item.user_id }}</td>
-          <td>{{ item.fecha }}</td>
-          <td>{{ item.total }}</td>
+          <td>{{ item.user.name }}</td>
+          <td>{{ item.fecha | date: "dd/MM/yyyy" }}</td>
+          <td>{{ item.total | number: "3.2-5" }}</td>
         </tr>
       </ng-template>
     </tbody>

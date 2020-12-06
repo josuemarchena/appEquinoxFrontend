@@ -47,9 +47,16 @@ export class PedidoAllComponent implements OnInit {
   }
 
   actualizarEstado(item) {
+
+    if(item.personal_id==null && item.tipo_pedido =='Express'){
+      alert('Primero debes asignar un personal de entrega');
+      return;
+    }
+
+
     let formData = new FormData();
     formData = this.gService.toFormData(item);
-    formData.append('_method', 'PATCH');
+    formData.append('_method', 'PATCH') ;
 
     this.gService
       .update_formdata('pedido', formData)

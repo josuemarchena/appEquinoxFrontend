@@ -10,7 +10,7 @@
             <div class="form-group row">
               <label class="col-sm-4 col-form-label" for="nombre">Fecha</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" formControlName="fecha" readonly name="fecha"/>
+                <p class="card-text">{{ fecha | date: "dd/MM/yyyy" }}</p>
               </div>
             </div>
 
