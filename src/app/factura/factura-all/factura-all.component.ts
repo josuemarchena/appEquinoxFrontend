@@ -40,7 +40,7 @@ export class FacturaAllComponent implements OnInit {
   }
 
   crearFactura() {
-    this.router.navigate(['/personal/create'], {
+    this.router.navigate(['/factura/create'], {
       relativeTo: this.route,
     });
   }

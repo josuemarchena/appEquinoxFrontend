@@ -5,6 +5,7 @@ import { RolGuardService } from '../share/rol-guard.service';
 import { FacturaAllComponent } from './factura-all/factura-all.component';
 import { FacturaCreateComponent } from './factura-create/factura-create.component';
 
+
 const routes: Routes = [
   {
     path: 'factura/all',
@@ -18,6 +19,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService, RolGuardService],
     data: { expectedRole: 2 },
   },
+
 ];
 
 @NgModule({

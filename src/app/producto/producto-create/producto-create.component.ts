@@ -49,6 +49,8 @@ export class ProductoCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+
   getcategorias() {
     return this.gService.list('categoria/').subscribe(
       (respuesta: any) => {
